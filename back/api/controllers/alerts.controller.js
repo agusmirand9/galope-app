@@ -71,12 +71,3 @@ export async function saveAlertConfirmation(req, res) {
     }
 }
 
-export async function getAlertsHistory(req, res) {
-    try {
-        const avisos = await alertService.getAlertsHistory(req.usuario._id)
-        res.status(200).json(avisos)
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: "Error interno del servidor" })
-    }
-}

@@ -96,7 +96,4 @@ export async function saveAlertConfirmation(id, usuarioId) {
     return toPublic(actualizado, usuarioId)
 }
 
-export async function getAlertsHistory(usuarioId) {
-    const avisos = await db.collection("avisos").find().sort({ createdAt: -1 }).limit(100).toArray()
-    return avisos.map(aviso => toPublic(aviso, usuarioId))
-}
+

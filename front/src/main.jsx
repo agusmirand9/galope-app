@@ -38,7 +38,6 @@ const router = createBrowserRouter([
       { path: "/eliminar-viaje/:id", element: <ProtectedRoute element={<EliminarViaje />} /> },
       { path: "/avisos", element: <ProtectedRoute element={<Avisos />} /> },
       { path: "/nuevo-aviso", element: <ProtectedRoute element={<NuevoAviso />} /> },
-      { path: "/historial", element: <ProtectedRoute rol={["admin"]} element={<Historial />} /> },
       { path: "*", element: <NotFound /> }
     ]
   }
