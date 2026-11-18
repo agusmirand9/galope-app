@@ -20,7 +20,7 @@ export default function ComoFunciona() {
     return (
         <section id="como-funciona" className="mx-auto max-w-6xl scroll-mt-6 px-4 pb-24 pt-8 md:px-8 md:pb-32">
             <div className="md:text-center">
-                <h2 className="titulo text-4xl text-azul md:text-5xl">Cómo funciona</h2>
+                <h2 className="titulo text-4xl uppercase text-azul md:text-5xl">Cómo funciona</h2>
                 <p className="mt-2 font-bold text-marron">Así te acompañamos</p>
             </div>
 

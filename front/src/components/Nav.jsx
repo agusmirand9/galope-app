@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, NavLink } from "react-router"
-import { History, House, LogIn, LogOut, Menu, Route, TriangleAlert, UserPlus, X } from "lucide-react"
-import { useRol, useUsuario } from "../context/session.context"
+import { House, LogIn, LogOut, Menu, Route, TriangleAlert, UserPlus, X } from "lucide-react"
+import { useUsuario } from "../context/session.context"
 
 // Estilo de cada link: en escritorio es una píldora, en el menú del celular ocupa todo el ancho
 const linkClass = (mobile) => ({ isActive }) =>
@@ -9,7 +9,6 @@ const linkClass = (mobile) => ({ isActive }) =>
 
 export default function Nav() {
     const usuario = useUsuario()
-    const rol = useRol()
     const [abierto, setAbierto] = useState(false)
 
     // El menú del celular se cierra con la tecla Escape
@@ -28,12 +27,11 @@ export default function Nav() {
             { to: "/", label: "Inicio", icon: House, end: true },
             { to: "/viajes", label: "Mis viajes", icon: Route },
             { to: "/avisos", label: "Avisos", icon: TriangleAlert },
-            ...(rol === "admin" ? [{ to: "/historial", label: "Historial", icon: History }] : []),
             { to: "/salir", label: "Salir", icon: LogOut }
         ]
         : [
             { to: "/", label: "Inicio", icon: House, end: true },
-            { to: "/login", label: "Entrar", icon: LogIn }
+            { to: "/login", label: "Iniciar sesión", icon: LogIn }
         ]
 
     return (
@@ -51,7 +49,7 @@ export default function Nav() {
                         ))}
                         {!usuario && (
                             <Link to="/register" className="btn btn-primary btn-small">
-                                <UserPlus size={18} aria-hidden="true" />Sumate
+                                <UserPlus size={18} aria-hidden="true" />Crear cuenta
                             </Link>
                         )}
                     </div>
@@ -79,7 +77,7 @@ export default function Nav() {
                         ))}
                         {!usuario && (
                             <Link to="/register" onClick={cerrar} className="btn btn-primary mt-1">
-                                <UserPlus size={20} aria-hidden="true" />Sumate
+                                <UserPlus size={20} aria-hidden="true" />Crear cuenta
                             </Link>
                         )}
                     </div>

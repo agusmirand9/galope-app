@@ -20,7 +20,7 @@ const EditarViaje = lazy(() => import('./pages/viajes/EditarViaje.jsx'))
 const EliminarViaje = lazy(() => import('./pages/viajes/EliminarViaje.jsx'))
 const Avisos = lazy(() => import('./pages/avisos/Avisos.jsx'))
 const NuevoAviso = lazy(() => import('./pages/avisos/NuevoAviso.jsx'))
-const Historial = lazy(() => import('./pages/avisos/Historial.jsx'))
+
 
 const router = createBrowserRouter([
   {

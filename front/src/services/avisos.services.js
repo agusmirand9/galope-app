@@ -2,7 +2,6 @@ import { call } from "./api.services"
 
 const api = {
     getAvisos: (tipo) => call("/avisos" + (tipo ? `?tipo=${tipo}` : "")),
-    getHistorial: () => call("/avisos/historial"),      // solo admin
     createAviso: (aviso) => call("/avisos", "POST", aviso),
     updateAviso: (id, aviso) => call("/avisos/" + id, "PATCH", aviso),
     deleteAviso: (id) => call("/avisos/" + id, "DELETE"),

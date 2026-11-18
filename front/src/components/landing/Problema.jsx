@@ -31,7 +31,7 @@ export default function Problema() {
                     <img src="/img/cartel.webp" alt="Cartel de ruta cubierto de stickers de viajeros" className="-mr-5 aspect-3/5 w-[34%] rounded-l-[2.5rem] object-cover md:hidden" />
                 </div>
 
-                <a href="#sumate" className="btn-land btn-land-marron mt-12 w-full md:mt-10">Sumate a la comunidad</a>
+                <a href="#sumate" className="btn-land btn-land-marron mt-12 w-full md:mt-10">Crear cuenta</a>
             </div>
 
             {/* Escritorio: fotos sobre el panel marrón (la primera se sale del panel por la izquierda) */}

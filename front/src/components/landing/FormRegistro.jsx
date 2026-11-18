@@ -37,13 +37,13 @@ export default function FormRegistro() {
     }
 
     return (
-        <section id="sumate" className="trama-claro relative -mt-14 scroll-mt-0 rounded-t-[4rem] bg-celeste-claro px-4 pt-16 md:pt-20">
+        <section id="sumate" className="relative scroll-mt-0 px-4 pt-6">
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
-                className="trama-oscuro mx-auto max-w-xl space-y-5 rounded-t-[3rem] bg-azul px-6 pb-44 pt-12 shadow-lg md:px-16"
+                className="mx-auto max-w-xl space-y-5 rounded-t-[3rem] bg-azul px-6 pb-44 pt-12 shadow-lg md:px-16"
             >
-                <h2 className="titulo text-center text-3xl text-white">SUMATE A LA COMUNIDAD</h2>
+                <h2 className="titulo text-center text-3xl text-white">CREÁ TU CUENTA</h2>
 
                 <div className="space-y-2">
                     <label htmlFor="landing-name" className="sr-only">Nombre</label>
@@ -52,12 +52,13 @@ export default function FormRegistro() {
                 </div>
                 <div className="space-y-2">
                     <label htmlFor="landing-email" className="sr-only">Correo electrónico</label>
-                    <input id="landing-email" type="email" placeholder="Correo electronico" autoComplete="email" className="input-land" aria-invalid={!!errors.email} {...register("email")} />
+                    <input id="landing-email" type="email" placeholder="Correo electrónico" autoComplete="email" className="input-land" aria-invalid={!!errors.email} {...register("email")} />
                     <FormError message={errors.email?.message} />
                 </div>
                 <div className="space-y-2">
                     <label htmlFor="landing-password" className="sr-only">Contraseña</label>
                     <input id="landing-password" type="password" placeholder="Contraseña" autoComplete="new-password" className="input-land" aria-invalid={!!errors.password} {...register("password")} />
+                    <p className="text-sm text-celeste">Mínimo 8 caracteres</p>
                     <FormError message={errors.password?.message} />
                 </div>
 
@@ -75,7 +76,7 @@ export default function FormRegistro() {
 
                 <div className="flex flex-col items-center gap-3 pt-2">
                     <button type="submit" disabled={isSubmitting} className="btn-land btn-land-marron">
-                        {isSubmitting ? "Creando cuenta..." : "Crear mi cuenta"}
+                        {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
                     </button>
                     <p className="text-sm text-white">
                         ¿Ya tenés cuenta? <Link to="/login" className="font-semibold underline">Iniciá sesión</Link>.

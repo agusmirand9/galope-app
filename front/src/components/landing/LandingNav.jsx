@@ -5,7 +5,8 @@ import Logo from "../Logo"
 const SECCIONES = [
     { href: "#como-funciona", label: "Cómo funciona" },
     { href: "#avisos", label: "Avisos" },
-    { href: "#comunidad", label: "Comunidad" }
+    { href: "#comunidad", label: "Comunidad" },
+    { href: "#planes", label: "Planes" }
 ]
 
 const linkClass = "inline-flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-marron transition hover:bg-celeste"
@@ -18,7 +19,7 @@ export default function LandingNav() {
                 <Link to="/"><Logo className="h-11 w-auto" /></Link>
                 <div className="flex items-center gap-2">
                     <Link to="/login" className="inline-flex min-h-11 items-center px-2 text-base text-marron">Iniciar sesión</Link>
-                    <a href="#sumate" className="inline-flex min-h-12 items-center rounded-2xl bg-marron px-6 text-base text-white transition hover:bg-marron/90">Sumate</a>
+                    <a href="#sumate" className="inline-flex min-h-12 items-center rounded-2xl bg-marron px-4 text-base text-white transition hover:bg-marron/90">Crear cuenta</a>
                 </div>
             </nav>
 
@@ -31,7 +32,7 @@ export default function LandingNav() {
                     <a key={href} href={href} className={linkClass}>{label}</a>
                 ))}
                 <Link to="/login" className={linkClass}>Iniciar sesión</Link>
-                <a href="#sumate" className="inline-flex min-h-11 items-center rounded-lg bg-marron px-4 text-sm font-medium text-white transition hover:bg-marron/90">Sumate</a>
+                <a href="#sumate" className="inline-flex min-h-11 items-center rounded-lg bg-marron px-4 text-sm font-medium text-white transition hover:bg-marron/90">Crear cuenta</a>
             </nav>
         </header>
     )

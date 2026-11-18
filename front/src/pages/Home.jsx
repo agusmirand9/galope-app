@@ -3,13 +3,17 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router"
 import { useUsuario } from "../context/session.context"
 import { useApiViajes } from "../services/viajes.services"
-import { diasParaSalir, formatDia } from "../utils/dates"
+import { useApiAvisos } from "../services/avisos.services"
+import { TIPOS } from "../utils/alerts"
+import { diasParaSalir, formatDia, hace } from "../utils/dates"
 import Landing from "./Landing"
 
 export default function Home() {
     const usuario = useUsuario()
     const { getViajes } = useApiViajes()
+    const { getAvisos } = useApiAvisos()
     const [proximo, setProximo] = useState(null)
+    const [avisos, setAvisos] = useState([])
 
     useEffect(() => {
         if (!usuario) return
@@ -19,6 +23,16 @@ export default function Home() {
             .catch(() => { })
         return () => { activo = false }
     }, [usuario, getViajes])
+
+    // Los 3 avisos más recientes (si falla, la sección simplemente no se muestra)
+    useEffect(() => {
+        if (!usuario) return
+        let activo = true
+        getAvisos()
+            .then(data => { if (activo) setAvisos(data.slice(0, 3)) })
+            .catch(() => { })
+        return () => { activo = false }
+    }, [usuario, getAvisos])
 
     // Sin sesión: la landing (el Layout le saca el menú y el ancho máximo en esta ruta)
     if (!usuario) return <Landing />
@@ -51,6 +65,33 @@ export default function Home() {
                     <p className="mt-1">Mirá qué dicen otros viajeros o publicá lo que ves.</p>
                 </Link>
             </div>
+
+            <section aria-labelledby="ultimos-avisos" className="space-y-3 pt-2">
+                <div className="flex items-center justify-between gap-3">
+                    <h2 id="ultimos-avisos" className="text-lg font-bold">Últimos avisos de ruta</h2>
+                    <Link to="/avisos" className="inline-flex min-h-11 items-center text-sm font-semibold text-marron underline">Ver todos</Link>
+                </div>
+                {avisos.length === 0 ? (
+                    <div className="card">
+                        <p className="font-bold">No hay avisos vigentes</p>
+                        <p className="mt-1 text-azul/80">Si ves algo en la ruta, publicalo para ayudar a quien viene detrás.</p>
+                        <Link to="/nuevo-aviso" className="btn btn-primary btn-small mt-3">Publicar un aviso</Link>
+                    </div>
+                ) : avisos.map(aviso => {
+                    const tipo = TIPOS[aviso.tipo]
+                    const Icono = tipo.icono
+                    const n = aviso.totalConfirmaciones
+                    return (
+                        <Link key={aviso._id} to="/avisos" className={`card block border-l-8 ${tipo.borde}`}>
+                            <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold ${tipo.badge}`}>
+                                <Icono size={18} aria-hidden="true" />{tipo.label}
+                            </span>
+                            <p className="mt-2">{aviso.descripcion || "Sin descripción"}</p>
+                            <p className="mt-1 text-sm text-azul/80">Confirmado por {n} {n === 1 ? "viajero" : "viajeros"}, {hace(aviso.createdAt)}</p>
+                        </Link>
+                    )
+                })}
+            </section>
         </div>
     )
 }

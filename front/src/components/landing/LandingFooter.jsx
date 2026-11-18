@@ -1,11 +1,13 @@
 import { Mail } from "lucide-react"
 import { Link } from "react-router"
 import Logo from "../Logo"
+import { EMAIL_CONTACTO } from "../../utils/contacto"
 
 const NAVEGACION = [
     { href: "#como-funciona", label: "Cómo funciona" },
     { href: "#avisos", label: "Avisos" },
-    { href: "#comunidad", label: "Comunidad" }
+    { href: "#comunidad", label: "Comunidad" },
+    { href: "#planes", label: "Planes" }
 ]
 
 // Las redes todavía no tienen perfil: reemplazar los "#" por las URLs reales
@@ -19,7 +21,7 @@ const linkClass = "inline-flex min-h-11 items-center text-sm text-azul hover:und
 
 export default function LandingFooter() {
     return (
-        <footer className="trama-oscuro relative -mt-28 rounded-t-[5rem] bg-celeste px-6 pb-10 pt-14 md:px-12">
+        <footer className="relative -mt-28 rounded-t-[5rem] bg-celeste px-6 pb-10 pt-14 md:px-12">
             <div className="mx-auto grid max-w-6xl items-center gap-8 text-center md:grid-cols-[auto_1fr_auto] md:text-left">
                 <Logo className="mx-auto h-24 w-auto md:mx-0" />
 
@@ -37,8 +39,8 @@ export default function LandingFooter() {
                 </div>
 
                 <div className="flex flex-col items-center gap-4 md:items-start">
-                    <a href="mailto:hola@galope.com" className="inline-flex min-h-11 items-center gap-2 text-sm text-azul hover:underline">
-                        <Mail size={20} aria-hidden="true" />hola@galope.com
+                    <a href={`mailto:${EMAIL_CONTACTO}`} className="inline-flex min-h-11 items-center gap-2 text-sm text-azul hover:underline">
+                        <Mail size={20} aria-hidden="true" />{EMAIL_CONTACTO}
                     </a>
                     <ul className="flex gap-4">
                         {REDES.map(({ nombre, href, icono }) => (
