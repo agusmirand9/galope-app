@@ -1,0 +1,588 @@
+{
+  "info": {
+    "name": "GALOPÉ API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Colección del backend de GALOPÉ. Ejecutá primero Usuarios > Login: guarda el token en la variable {{token}}."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:2026/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "viajeId",
+      "value": ""
+    },
+    {
+      "key": "avisoId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Registro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Shaiel\",\n  \"email\": \"shaiel@mail.com\",\n  \"password\": \"12345678\",\n  \"passwordConfirm\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"shaiel@mail.com\",\n  \"password\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (pm.response.code === 200) pm.collectionVariables.set('token', data.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Datos del token (me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "me"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Viajes",
+      "item": [
+        {
+          "name": "Mis viajes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mis viajes - próximos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes?estado=proximos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "proximos"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mis viajes - pasados",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes?estado=pasados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "pasados"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear viaje",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origen\": \"Buenos Aires\",\n  \"destino\": \"Mendoza\",\n  \"fechaIda\": \"2026-12-20\",\n  \"fechaVuelta\": \"2026-12-28\",\n  \"adultos\": 2,\n  \"menores\": 1,\n  \"vehiculo\": \"auto\",\n  \"mascotas\": false,\n  \"paradas\": [\n    {\n      \"nombre\": \"Gomería de San Rafael\",\n      \"nota\": \"Atienden hasta tarde\",\n      \"lat\": -34.61,\n      \"lng\": -68.33\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) pm.collectionVariables.set('viajeId', pm.response.json()._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Ver viaje",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes/{{viajeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes",
+                "{{viajeId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Reemplazar viaje (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes/{{viajeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes",
+                "{{viajeId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origen\": \"Buenos Aires\",\n  \"destino\": \"San Rafael\",\n  \"fechaIda\": \"2026-12-20\",\n  \"fechaVuelta\": \"2026-12-28\",\n  \"adultos\": 2,\n  \"menores\": 1,\n  \"vehiculo\": \"auto\",\n  \"mascotas\": false,\n  \"paradas\": [\n    {\n      \"nombre\": \"Gomería de San Rafael\",\n      \"nota\": \"Atienden hasta tarde\",\n      \"lat\": -34.61,\n      \"lng\": -68.33\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Actualizar campos (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes/{{viajeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes",
+                "{{viajeId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"adultos\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Eliminar viaje (lógico)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/viajes/{{viajeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "viajes",
+                "{{viajeId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Avisos",
+      "item": [
+        {
+          "name": "Avisos vigentes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Avisos vigentes - solo cortes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos?tipo=corte",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "corte"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Publicar aviso",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"obra\",\n  \"descripcion\": \"Ruta 40, un carril habilitado\",\n  \"lat\": -34.61,\n  \"lng\": -68.33\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) pm.collectionVariables.set('avisoId', pm.response.json()._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Ver aviso",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos/{{avisoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos",
+                "{{avisoId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Editar descripción (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos/{{avisoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos",
+                "{{avisoId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descripcion\": \"Ya hay dos carriles\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Confirmar aviso (otra cuenta)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos/{{avisoId}}/confirmaciones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos",
+                "{{avisoId}}",
+                "confirmaciones"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Borrar aviso (lógico)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos/{{avisoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos",
+                "{{avisoId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Historial (solo admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/avisos/historial",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "avisos",
+                "historial"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* Identidad GALOPÉ. Los colores de estado (rojo/amarillo/verde) son SOLO para avisos. */
+@theme {
+    --color-azul: #183b64;
+    --color-marron: #541f11;
+    --color-celeste: #c0d9f3;
+    --color-celeste-claro: #eef4fb;
+    --color-crema: #fff6e0;
+    --color-estado-rojo: #ec2611;
+    --color-estado-amarillo: #ffc84d;
+    --color-estado-verde: #4fcf57;
+
+    --font-display: "Boldonse", ui-serif, Georgia, serif;
+    --font-sans: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+    body {
+        @apply bg-celeste-claro font-sans text-azul antialiased;
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--color-marron);
+        outline-offset: 2px;
+    }
+
+    /* Los links "#sumate", "#avisos"... bajan suave (salvo que la persona pida menos movimiento) */
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+}
+
+/* Piezas que se repiten en toda la app (áreas táctiles de 44 a 48 px) */
+@layer components {
+    .input {
+        @apply block min-h-12 w-full rounded-xl border-2 border-celeste bg-white px-4 py-2 text-base text-azul placeholder:text-azul/40 focus:border-azul focus:outline-none;
+    }
+
+    .input[aria-invalid="true"] {
+        @apply border-marron;
+    }
+
+    .btn {
+        @apply inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full px-6 text-base font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .btn-primary {
+        @apply bg-marron text-white hover:bg-marron/90;
+    }
+
+    .btn-secondary {
+        @apply border-2 border-azul bg-white text-azul hover:bg-celeste;
+    }
+
+    .btn-small {
+        @apply min-h-11 px-4 text-sm;
+    }
+
+    .card {
+        @apply rounded-3xl bg-white p-5 shadow-sm;
+    }
+
+    /* ---------- Landing (pantalla para quien no tiene cuenta) ---------- */
+
+    /* Títulos grandes: Mona Sans pesada y condensada */
+    .titulo {
+        font-family: var(--font-sans);
+        font-weight: 900;
+        font-stretch: 75%;
+        line-height: 0.95;
+        letter-spacing: -0.01em;
+    }
+
+    /* Trama de trazos de ruta. 01 (celeste) va sobre fondos claros; 02 (clara) sobre marrón, azul y celeste,
+       donde se baja la intensidad con una capa propia para que quede sutil. */
+    .trama-claro {
+        background-image: url("/tramas/tramas-01.svg");
+        background-size: 100% auto;
+    }
+
+    .trama-oscuro {
+        position: relative;
+        isolation: isolate;
+    }
+
+    .trama-oscuro::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        pointer-events: none;
+        background-image: url("/tramas/tramas-02.svg");
+        background-size: 100% auto;
+        opacity: 0.4;
+    }
+
+    @media (max-width: 767px) {
+        .trama-claro,
+        .trama-oscuro::before {
+            background-size: 900px auto;
+        }
+    }
+
+    /* Botones de la landing: esquinas de 12 px y borde fino (no son píldora como el resto de la app) */
+    .btn-land {
+        @apply inline-flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-8 text-base font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .btn-land-marron {
+        @apply border-celeste-claro/60 bg-marron text-white hover:bg-marron/90;
+    }
+
+    .btn-land-claro {
+        @apply border-marron/40 bg-celeste-claro text-marron hover:bg-white;
+    }
+
+    /* Campos del formulario de la landing: el rótulo va como placeholder en mayúsculas */
+    .input-land {
+        @apply block min-h-14 w-full rounded-xl border-2 border-transparent bg-celeste-claro px-4 text-base font-semibold text-azul placeholder:font-semibold placeholder:text-azul placeholder:uppercase placeholder:opacity-100 focus:border-marron focus:outline-none;
+    }
+
+    .input-land[aria-invalid="true"] {
+        @apply border-marron;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
